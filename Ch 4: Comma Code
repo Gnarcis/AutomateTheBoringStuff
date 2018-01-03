@@ -1,0 +1,10 @@
+spam = ['apples', 'bananas', 'tofu', 'cats']
+newstring = ''
+
+for word in spam:
+	if word != spam[-1]:
+		newstring += word + ', '
+	else:
+		newstring += 'and ' + word
+
+print (newstring)
