@@ -1,0 +1,8 @@
+import re
+
+def new_strip(word, space=' '):
+  strip_regex = re.compile(r'^%s+|%s+$' %(space, space))
+  sr = strip_regex.sub('', word)
+  print (sr)
+    
+new_strip('..........   goof,,,,,,,,,,,,,,,', ',')
