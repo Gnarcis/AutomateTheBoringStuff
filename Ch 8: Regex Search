@@ -1,0 +1,25 @@
+import re
+import os
+
+folder = input("Which folder would you like to search?\n")
+word = input("What word are you looking for?\n")
+file_regex = re.compile(r'\w+\.txt')
+
+print("Here are the files in %s that contain the word '%s':" % (os.path.abspath(folder), word))
+
+for file in os.listdir(folder):
+	if file_regex.search(file):	
+		reg_file = open(file, 'r')
+		read_file = reg_file.read()
+		reg_list = list(read_file.split())
+		
+		for v in reg_list:
+			if v.lower() == word.lower():
+				print (file)
+			else:
+				continue
+
+	
+		reg_file.close()
+	
+
