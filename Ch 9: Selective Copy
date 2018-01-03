@@ -1,0 +1,21 @@
+import os, shutil
+
+#ask for folder
+os.chdir('C:\\Users\\Dan\\Desktop')
+
+sFolder = input("Please input folder in desktop to look through: ")
+absFolder = os.path.abspath(sFolder)
+dirFolder = os.path.dirname(absFolder)
+print("\nLooking through: " + absFolder + "\n")
+
+#make new folder
+if not os.path.exists(dirFolder + '\\NewFolder'):
+  os.makedirs(dirFolder + '\\NewFolder')
+
+#walk through file tree, looking for matching regex
+for foldername, subfoldername, filenames in os.walk(absFolder):
+	for filename in filenames:
+		if filename.endswith('.jpg'):
+			print ("Copying %s to %s" % (filename, dirFolder + '\\NewFolder\\' + filename + "\n"))
+			shutil.copy(absFolder + "\\" + filename, dirFolder + '\\NewFolder\\' + filename)
+			
