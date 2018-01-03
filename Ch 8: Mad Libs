@@ -1,0 +1,38 @@
+import re
+
+#read in file
+mad_lib = open('madlibtext.txt', 'r')
+
+mad_contents = mad_lib.read()
+mad_list = list(mad_contents.split())
+
+mad_lib.close()
+
+adj_regex = re.compile(r'ADJECTIVE*')
+noun_regex = re.compile(r'NOUN*')
+verb_regex = re.compile(r'VERB*')
+adv_regex = re.compile(r'ADVERB*')
+
+for i, v in enumerate(mad_list):
+	if adj_regex.match(v):
+		new_word = input("Please type in an adjective: ")
+		mad_list[i] = new_word
+	elif noun_regex.match(v):
+		new_word = input("Please type in a noun: ")
+		mad_list[i] = new_word
+	elif verb_regex.match(v):
+		new_word = input("Please type in a verb: ")
+		mad_list[i] = new_word
+	elif adv_regex.match(v):
+		new_word = input("Please type in an adverb: ")
+		mad_list[i] = new_word
+	else:
+		continue
+
+new_lib = ' '
+new_lib = new_lib.join(mad_list)
+print(new_lib)
+
+new_file = open('newmadlibtext.txt', 'w')
+new_file.write(new_lib)
+new_file.close()
