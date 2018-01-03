@@ -1,0 +1,32 @@
+tableData = [['apples', 'oranges', 'cherries', 'banana'],
+             ['Alice', 'Bob', 'Carol', 'David'],
+             ['dogs', 'cats', 'moose', 'goose']]
+             
+
+def printTable(table):
+  i = 0
+  j = 0
+  newString = ''
+  bigLength = 0
+  bigList = [k for k in range(len(table))]
+
+  for x in range(len(table)):
+    otherList = table[x]
+    for y in range(len(otherList)):
+      if len(otherList[y]) > bigLength:
+        bigLength = len(otherList[y])
+        bigList[x] = bigLength
+        print(bigList)
+    bigLength = 0
+      
+  while i < len(table[j]):
+    while j < len(table):
+      newString += table[j][i].rjust(bigList[j] + 1)
+      j += 1
+    print (newString)
+    i += 1
+    j = 0
+    newString = ''
+
+printTable(tableData)
+
