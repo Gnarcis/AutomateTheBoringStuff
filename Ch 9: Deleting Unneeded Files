@@ -1,0 +1,7 @@
+import os, shutil
+
+for foldernames, subfoldernames, filenames in os.walk('C:\\Users\\Dan'):
+	for filename in filenames:
+		filepath = os.path.join(foldernames, filename)
+		if os.path.getsize(filepath) > 100000000:
+			print (filepath + ': ' + str(round((os.path.getsize(filepath))/1000000, 2)) + ' MB.\n')
