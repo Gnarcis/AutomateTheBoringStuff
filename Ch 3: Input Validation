@@ -1,0 +1,8 @@
+while True:
+	val = input('Please type an integer: ')
+
+	try:
+		int(val) / 1
+		print ('Yay! Good input!')
+	except ValueError:
+		print ('Input must be an integer!')
