@@ -1,0 +1,49 @@
+#! python3
+from selenium import webdriver
+import time
+
+#Ask user for email address, password, receiving address, email subject, email body
+userEmail = input('Please type in your Gmail login: ')
+userPass = input('Please type in your Gmail password: ')
+sendTo = input('Please type in the address you would like to send an email to: ')
+sendSub = input('Please type in the subject line of the email: ')
+sendBody = input('Compose your email: ')
+
+#Open browser, navigate to gmail webpage
+browser = webdriver.Firefox()
+browser.get('http://www.gmail.com')
+
+
+
+#Sign into email address
+userElem = browser.find_element_by_id('identifierId')
+userElem.send_keys(userEmail)
+subNext = browser.find_element_by_id('identifierNext')
+subNext.click()
+time.sleep(2)
+
+#Use given password to login
+pwElem = browser.find_element_by_id('password')
+pwElem.send_keys(userPass)
+pwNext = browser.find_element_by_id('passwordNext')
+pwNext.click()
+time.sleep(5)
+
+#Click 'Compose' button
+compElem = browser.find_element_by_xpath("//*[@class='aic']//*[text()='COMPOSE']")
+compElem.click()
+time.sleep(1)
+
+#Type information into 'To', 'Subject', and 'Body' fields
+toElem = browser.find_element_by_xpath("//textarea[@aria-label='To']")
+toElem.send_keys(sendTo)
+
+subElem = browser.find_element_by_xpath("//input[@name='subjectbox']")
+subElem.send_keys(sendSub)
+
+bodyElem = browser.find_element_by_xpath("//div[@aria-label='Message Body']")
+bodyElem.send_keys(sendBody)
+
+#Click 'Send' button
+sendElem = browser.find_element_by_xpath("//div//*[text()='Send']")
+sendElem.click()
