@@ -1,0 +1,33 @@
+#! python3
+
+import requests, bs4, os
+
+#Create new folder for image files if one does not already exist
+os.makedirs('downloaded_images', exist_ok=True)
+
+#Ask user for search term
+sTerm = input('Search imgur.com for: ')
+url = 'https://imgur.com/search?q=' + str(sTerm)
+
+#Request imgur.com using search term
+res = requests.get(url)
+res.raise_for_status()
+
+#Create BeautifulSoup object, search for images using 'img' element in class 'image-list-link'
+soup = bs4.BeautifulSoup(res.text, "html.parser")
+imgElems = soup.select('.image-list-link img')
+
+#Iterate through list created by imgElems 10 times or through length of list, whichever is smaller
+numSave = min(10, len(imgElems))
+for i in range(numSave):
+	#Correctly format image url
+	imgUrl = 'http:' + imgElems[i].get('src')
+	#Request image url
+	req = requests.get(imgUrl)
+	req.raise_for_status()
+	
+	#Save image to folder
+	saveImage = open(os.path.join('downloaded_images', os.path.basename(imgUrl)), 'wb')
+	for chunk in req.iter_content(100000):
+		saveImage.write(chunk)
+	saveImage.close()
