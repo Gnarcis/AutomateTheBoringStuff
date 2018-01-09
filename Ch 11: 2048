@@ -1,0 +1,23 @@
+#! python3
+
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
+
+#Open Firefox to 2048 website
+webbrowser = webdriver.Firefox()
+webbrowser.get('https://gabrielecirulli.github.io/2048/')
+#Wait 2 seconds
+time.sleep(2)
+
+#Find basic page element
+htmlElem = webbrowser.find_element_by_xpath("//div[@class='container']")
+
+while True:	
+	#If retry button is available, click on it
+	try: 
+		againElem = webbrowser.find_element_by_xpath("//a[@class='retry-button']")
+		againElem.click()
+	#Otherwise, press UP, then RIGHT, then DOWN, then LEFT
+	except:
+		htmlElem.send_keys(Keys.UP, Keys.RIGHT, Keys.DOWN, Keys.LEFT)
