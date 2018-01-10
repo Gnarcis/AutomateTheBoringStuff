@@ -1,0 +1,36 @@
+#! python3
+
+import requests, bs4
+
+#Ask user for website to search
+searchSite = input('Type in website you want to search: ')
+
+#Request given site
+res = requests.get(searchSite)
+res.raise_for_status()
+
+#Creat BeautifulSoup object for site
+soupObject = bs4.BeautifulSoup(res.text, "html.parser")
+
+#Find all <a> tags on site
+linkFind = soupObject.select('a')
+
+#Iterate through list of <a> tags
+for ref in linkFind:
+	#Pull link from individual <a> tag
+	ad = ref.get('href')
+	
+	#If no link is embedded, skip this iteration
+	if ad == None:
+		continue
+		
+	#If link is extension of current website, add website to link string	
+	if ad.startswith('/'):
+		ad = searchSite + ad
+	
+	#Try to request website
+	try:
+		req = requests.get(ad)
+	#If link is broken, print website address to command line
+	except:
+		print('404 Did Not Find: ' + ad)
